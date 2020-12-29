@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Calculator
+namespace Calculator.Exceptios
 {
-    public interface IExpression
+    public class IncorrectBacketsException : Exception
     {
-        int Calculate();
     }
 }

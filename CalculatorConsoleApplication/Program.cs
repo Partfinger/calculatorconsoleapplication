@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator;
+using System;
 
 namespace CalculatorConsoleApplication
 {
@@ -6,7 +7,8 @@ namespace CalculatorConsoleApplication
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            InputOutputHandler handler = new InputOutputHandler();
+            handler.HandleUserInput();
         }
     }
 }
