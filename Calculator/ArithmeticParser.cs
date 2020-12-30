@@ -38,6 +38,7 @@ namespace Calculator
             Validate(input);
             input = DecodeNeglectedOperations(input);
             lexemes = SplitToLexemes(input);
+            ValidateBackets();
             position = 0;
             return Expression();
         }
@@ -56,7 +57,9 @@ namespace Calculator
             {
                 string current = lexemes[position];
                 if (current != "+" && current != "-")
+                {
                     break;
+                }
                 else
                     position++;
 
@@ -148,6 +151,22 @@ namespace Calculator
             input = regex.Replace(input, neglectedMultiReplacement);
 
             return input;
+        }
+
+        void ValidateBackets()
+        {
+            int numberOfBackets = 0;
+            foreach (string lexeme in lexemes)
+            {
+                if (lexeme == "(")
+                    numberOfBackets++;
+                else if (lexeme == ")")
+                    numberOfBackets--;
+                if (numberOfBackets < 0)
+                    throw new IncorrectBacketsException();
+            }
+            if (numberOfBackets != 0)
+                throw new IncorrectBacketsException();
         }
     }
 }

@@ -10,58 +10,50 @@ namespace CalculatorConsoleApplication
     {
 
         ArithmeticParser parser = new ArithmeticParser();
+        IOutput output;
 
-        public InputOutputHandler()
+        public InputOutputHandler(IOutput output)
         {
+            this.output = output;
         }
 
-        public void HandleUserInput()
+        public void HandleInput(string input)
         {
-            Console.WriteLine(Properties.Localization.Welcome);
-            Console.WriteLine(Properties.Localization.InputYoutExpression);
-            while (true)
+            int result;
+            try
             {
-                string input = Console.ReadLine();
-                int output;
-                try
-                {
-                    if (input.Length > 0)
-                        output = parser.Parse(input);
-                    else
-                        throw new ArgumentNullException();
+                output.Write($"{input} = ");
+                if (input.Length > 0)
+                    result = parser.Parse(input);
+                else
+                    throw new ArgumentNullException();
 
-                    Console.WriteLine($" = {output};");
-                }
-                catch (IncorrectArithmeticNotation)
-                {
-                    Console.WriteLine(Properties.Localization.IncorrectNotation);
-                }
-                catch (UnexpectedCharacterException)
-                {
-                    Console.WriteLine(Properties.Localization.UnexpectedCharacter);
-                }
-                catch (UnexpectedEndingException)
-                {
-                    Console.WriteLine(Properties.Localization.UnexpectedEnding);
-                }
-                catch (IncorrectBacketsException)
-                {
-                    Console.WriteLine(Properties.Localization.IncorrectBackets);
-                }
-                catch (ArgumentNullException)
-                {
-                    Console.WriteLine(Properties.Localization.EmptyString);
-                }
-                catch (DivideByZeroException)
-                {
-                    Console.WriteLine(Properties.Localization.DivideByZero); 
-                }
+                output.WriteLine(result.ToString());
             }
-        }
-
-        public void HandleFile(string path)
-        {
-
+            catch (IncorrectArithmeticNotation)
+            {
+                output.WriteLine(Properties.Localization.IncorrectNotation);
+            }
+            catch (UnexpectedCharacterException)
+            {
+                output.WriteLine(Properties.Localization.UnexpectedCharacter);
+            }
+            catch (UnexpectedEndingException)
+            {
+                output.WriteLine(Properties.Localization.UnexpectedEnding);
+            }
+            catch (IncorrectBacketsException)
+            {
+                output.WriteLine(Properties.Localization.IncorrectBackets);
+            }
+            catch (ArgumentNullException)
+            {
+                output.WriteLine(Properties.Localization.EmptyString);
+            }
+            catch (DivideByZeroException)
+            {
+                output.WriteLine(Properties.Localization.DivideByZero);
+            }
         }
     }
 }

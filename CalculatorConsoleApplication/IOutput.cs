@@ -6,6 +6,7 @@ namespace CalculatorConsoleApplication
 {
     public interface IOutput
     {
-        void WriteLine(string output);
+        public void Write(string output);
+        public void WriteLine(string output);
     }
 }

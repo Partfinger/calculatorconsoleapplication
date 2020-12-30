@@ -1,19 +1,20 @@
-﻿using System;
+﻿using CalculatorConsoleApplication;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CalculatorConsoleApplication
+namespace CalculatorTests.Stubs
 {
-    public class ConsoleAplication : IOutput
+    class OutputStub : IOutput
     {
         public void Write(string output)
         {
-            Console.Write(output);
+
         }
 
         public void WriteLine(string output)
         {
-            Console.WriteLine(output);
+
         }
     }
 }

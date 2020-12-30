@@ -123,6 +123,9 @@
   <data name="EmptyString" xml:space="preserve">
     <value>Пусту строку не можливо інтерпретувати як арифметичний вираз.</value>
   </data>
+  <data name="FileNotExist" xml:space="preserve">
+    <value>Заданий файл з виразами не вдалося знайти.</value>
+  </data>
   <data name="IncorrectBackets" xml:space="preserve">
     <value>Некоректно задані дужки в виразі.</value>
   </data>

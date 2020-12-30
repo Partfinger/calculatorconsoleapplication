@@ -79,6 +79,15 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Заданий файл з виразами не вдалося знайти..
+        /// </summary>
+        internal static string FileNotExist {
+            get {
+                return ResourceManager.GetString("FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Некоректно задані дужки в виразі..
         /// </summary>
         internal static string IncorrectBackets {
