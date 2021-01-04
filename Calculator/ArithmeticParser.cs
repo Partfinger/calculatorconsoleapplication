@@ -60,14 +60,17 @@ namespace Calculator
                 {
                     break;
                 }
-                else
-                    position++;
+                position++;
 
                 int secondOperand = Term();
                 if (current == "+")
+                {
                     firstOperand += secondOperand;
+                }
                 else
+                {
                     firstOperand -= secondOperand;
+                }
             }
             return firstOperand;
         }
@@ -80,14 +83,20 @@ namespace Calculator
             {
                 string current = lexemes[position];
                 if (current != "*" && current != "/")
+                {
                     break;
+                }
                 position++;
 
                 int secondOperand = Factor();
                 if (current == "*" )
+                {
                     firstOperand *= secondOperand;
+                }
                 else
+                {
                     firstOperand /= secondOperand;
+                }
             }
             return firstOperand;
         }
@@ -96,32 +105,31 @@ namespace Calculator
         {
             string next = lexemes[position];
             int result;
-            if (next == "(")
+            if (!int.TryParse(next, out result))
             {
-                position++;
-                result = Expression();
-                string closingBracket;
-                if (position < lexemes.Length)
-                {
-                    closingBracket = lexemes[position];
-                }
-                else
-                {
-                    throw new UnexpectedEndingException();
-                }
-                if (position < lexemes.Length && closingBracket == ")")
+                if (next == "(")
                 {
                     position++;
-                    return result;
+                    result = Expression();
+
+                    if (position >= lexemes.Length)
+                    {
+                        throw new UnexpectedEndingException();
+                    }
+
+                    string closingBracket = lexemes[position];
+
+                    if (closingBracket == ")")
+                    {
+                        position++;
+                        return result;
+                    }
+                    throw new UnexpectedCharacterException();
                 }
-                throw new IncorrectBacketsException();
             }
             position++;
 
-            if (next == ")")
-                throw new IncorrectBacketsException();
-
-            return int.Parse(next);
+            return result;
         }
 
         string[] SplitToLexemes(string input)
@@ -135,11 +143,15 @@ namespace Calculator
         {
             Regex regex = new Regex(validCharacters);
             if (regex.IsMatch(input))
+            {
                 throw new UnexpectedCharacterException();
+            }    
 
             regex = new Regex(dublicaserOrExcess);
             if (regex.IsMatch(input))
+            {
                 throw new IncorrectArithmeticNotation();
+            }
         }
 
         string DecodeNeglectedOperations(string input)
@@ -159,11 +171,15 @@ namespace Calculator
             foreach (string lexeme in lexemes)
             {
                 if (lexeme == "(")
+                {
                     numberOfBackets++;
+                }
                 else if (lexeme == ")")
+                {
                     numberOfBackets--;
-                if (numberOfBackets < 0)
-                    throw new IncorrectBacketsException();
+                    if (numberOfBackets < 0)
+                        throw new IncorrectBacketsException();
+                }
             }
             if (numberOfBackets != 0)
                 throw new IncorrectBacketsException();
