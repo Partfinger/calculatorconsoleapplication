@@ -35,7 +35,12 @@ namespace Calculator
         public int Parse(string input)
         {
             input = input.Replace(" ", "");
+            if (input.Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             Validate(input);
+
             input = DecodeNeglectedOperations(input);
             lexemes = SplitToLexemes(input);
             ValidateBackets();

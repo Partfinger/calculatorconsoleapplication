@@ -50,12 +50,19 @@ namespace CalculatorTests
         public void IncorrectBacketTest()
         {
             string expression = " 4 / (25 - 35 + 10";
-            int expected = 1;
             ArithmeticParser parser = new ArithmeticParser();
 
             int actual = parser.Parse(expression);
+        }
 
-            Assert.AreEqual(expected, actual);
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void EmptyStringTest()
+        {
+            string expression = "           ";
+            ArithmeticParser parser = new ArithmeticParser();
+
+            int actual = parser.Parse(expression);
         }
     }
 }
