@@ -15,7 +15,8 @@ namespace Calculator
         /// <summary>
         /// Дублікати, два знаки підряд, знаки в кінці виразу
         /// </summary>
-        const string dublicaserOrExcess = @"[\+\-\*\/]{2,}|[\+\-\*\/]$|^[\+\-\*\/]";
+        const string dublicaserOrExcess = @"[\+\*\/]{2,}|\-{3,}|[\+\-\*\/]$|^[\+\*\/]|^\-{2,}";
+        //[\+\-\*\/]{2,}|[\+\-\*\/]$|^[\+\-\*\/]
         const string splitCharacters = @"([\+\-\*\/\(\)])";
         const string splitCharactersReplacement = @" $1 ";
 
@@ -130,6 +131,11 @@ namespace Calculator
                         return result;
                     }
                     throw new UnexpectedCharacterException();
+                }
+                else if (next == "-") // унарний мінус
+                {
+                    position++;
+                    return -Factor();
                 }
             }
             position++;
