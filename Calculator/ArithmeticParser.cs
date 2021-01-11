@@ -1,6 +1,7 @@
 ﻿using Calculator.Exceptios;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,7 +12,7 @@ namespace Calculator
         /// <summary>
         /// Шукає невалідні символи
         /// </summary>
-        const string validCharacters = @"[^\d\+\-\*\/\(\)]";
+        const string validCharacters = @"[^\d\+\-\*\/\(\)\.,]";
         /// <summary>
         /// Дублікати, два знаки підряд, знаки в кінці виразу
         /// </summary>
@@ -20,11 +21,13 @@ namespace Calculator
         const string splitCharacters = @"([\+\-\*\/\(\)])";
         const string splitCharactersReplacement = @" $1 ";
 
-        //const string validDotSeparator = @"[\D]\.[\D]|[\d]\.[\D]|[\D]\.[\d]";
         //const string bracketExpression = @"\(([\#\d\+\-\*\/]*)\)";
-        const string neglectedMultiPreBacket = @"([\d]|\))(\()";
-        const string neglectedMultiAfterBacket = @"([\)])([\d])";
-        const string neglectedMultiReplacement = @"$1*$2";
+        const string invalidDotSeparatorPattern = @"[\D]\.[\D]|[\d]\.[\D]|[\S]\.$";
+        const string neglectedMultiOperationPattern = @"([\d]|\))(\()|([\)])([\d])";
+        const string neglectedZeroInDecimalPattern = @"([\D])(\.[\d])";
+        const string anyWhiteSpacesPattern = @"\s+";
+        const string neglectedMultiReplacement = @"$1$3*$2$4";
+        const string neglectedZeroInDecimalReplacement = @"$1 0$2";
 
         string[] lexemes;
         int position;
@@ -33,9 +36,11 @@ namespace Calculator
         {
         }
 
-        public int Parse(string input)
+        public double Parse(string input)
         {
-            input = input.Replace(" ", "");
+            Regex regex = new Regex(anyWhiteSpacesPattern);
+            input = regex.Replace(input, "").Replace(',', '.');
+
             if (input.Length == 0)
             {
                 throw new ArgumentNullException();
@@ -44,7 +49,6 @@ namespace Calculator
 
             input = DecodeNeglectedOperations(input);
             lexemes = SplitToLexemes(input);
-            ValidateBackets();
             position = 0;
             return Expression();
         }
@@ -52,12 +56,12 @@ namespace Calculator
         /*
         E -> T + E  | T - E | T
         T -> F * T  | F / T | F
-        F -> N      | (E)
+        F -> N      | (E)   | -F
         */
 
-        int Expression()
+        double Expression()
         {
-            int firstOperand = Term();
+            double firstOperand = Term();
 
             while (position < lexemes.Length)
             {
@@ -68,7 +72,7 @@ namespace Calculator
                 }
                 position++;
 
-                int secondOperand = Term();
+                double secondOperand = Term();
                 if (current == "+")
                 {
                     firstOperand += secondOperand;
@@ -81,9 +85,9 @@ namespace Calculator
             return firstOperand;
         }
 
-        int Term()
+        double Term()
         {
-            int firstOperand = Factor();
+            double firstOperand = Factor();
 
             while (position < lexemes.Length)
             {
@@ -94,24 +98,26 @@ namespace Calculator
                 }
                 position++;
 
-                int secondOperand = Factor();
+                double secondOperand = Factor();
                 if (current == "*" )
                 {
                     firstOperand *= secondOperand;
                 }
                 else
                 {
+                    if (secondOperand == 0)
+                        throw new DivideByZeroException();
                     firstOperand /= secondOperand;
                 }
             }
             return firstOperand;
         }
 
-        int Factor()
+        double Factor()
         {
             string next = lexemes[position];
-            int result;
-            if (!int.TryParse(next, out result))
+            double result;
+            if (!double.TryParse(next, NumberStyles.Any, CultureInfo.InvariantCulture, out result))
             {
                 if (next == "(")
                 {
@@ -130,13 +136,13 @@ namespace Calculator
                         position++;
                         return result;
                     }
-                    throw new UnexpectedCharacterException();
                 }
                 else if (next == "-") // унарний мінус
                 {
                     position++;
                     return -Factor();
                 }
+                throw new UnexpectedCharacterException();
             }
             position++;
 
@@ -163,29 +169,37 @@ namespace Calculator
             {
                 throw new IncorrectArithmeticNotation();
             }
+
+            regex = new Regex(invalidDotSeparatorPattern);
+            if (regex.IsMatch(input))
+            {
+                throw new Exception();
+            }
+
+            ValidateBackets(input);
         }
 
         string DecodeNeglectedOperations(string input)
         {
-            Regex regex = new Regex(neglectedMultiPreBacket);
+            Regex regex = new Regex(neglectedMultiOperationPattern);
             input = regex.Replace(input, neglectedMultiReplacement);
 
-            regex = new Regex(neglectedMultiAfterBacket);
-            input = regex.Replace(input, neglectedMultiReplacement);
+            regex = new Regex(neglectedZeroInDecimalPattern);
+            input = regex.Replace(input, neglectedZeroInDecimalReplacement);
 
             return input;
         }
 
-        void ValidateBackets()
+        void ValidateBackets(string input)
         {
             int numberOfBackets = 0;
-            foreach (string lexeme in lexemes)
+            foreach (char lexeme in input)
             {
-                if (lexeme == "(")
+                if (lexeme == '(')
                 {
                     numberOfBackets++;
                 }
-                else if (lexeme == ")")
+                else if (lexeme == ')')
                 {
                     numberOfBackets--;
                     if (numberOfBackets < 0)

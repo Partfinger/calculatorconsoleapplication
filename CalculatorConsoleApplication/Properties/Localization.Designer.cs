@@ -61,7 +61,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Не можна ділити на нуль!.
+        ///   Looks up a localized string similar to The expression contains division by zero..
         /// </summary>
         internal static string DivideByZero {
             get {
@@ -70,7 +70,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пусту строку не можливо інтерпретувати як арифметичний вираз..
+        ///   Looks up a localized string similar to Empty string can not be interpreted as arithmetic expression..
         /// </summary>
         internal static string EmptyString {
             get {
@@ -79,7 +79,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Заданий файл з виразами не вдалося знайти..
+        ///   Looks up a localized string similar to The file does not exist with this path..
         /// </summary>
         internal static string FileNotExist {
             get {
@@ -88,7 +88,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Некоректно задані дужки в виразі..
+        ///   Looks up a localized string similar to The brackets in the expression are set incorrectly..
         /// </summary>
         internal static string IncorrectBackets {
             get {
@@ -97,7 +97,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to В виразі має місце бути некоректний запис арифметичних операцій..
+        ///   Looks up a localized string similar to Incorrect arithmetic notation..
         /// </summary>
         internal static string IncorrectNotation {
             get {
@@ -106,16 +106,16 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Введіть вирази для розрахунку:.
+        ///   Looks up a localized string similar to Enter the expression:.
         /// </summary>
-        internal static string InputYoutExpression {
+        internal static string InputYourExpression {
             get {
-                return ResourceManager.GetString("InputYoutExpression", resourceCulture);
+                return ResourceManager.GetString("InputYourExpression", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Некоректний символ в виразі..
+        ///   Looks up a localized string similar to Unexpected character in expression..
         /// </summary>
         internal static string UnexpectedCharacter {
             get {
@@ -124,7 +124,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Не всі дужки в виразі є закритими..
+        ///   Looks up a localized string similar to Unexpected ending of expression..
         /// </summary>
         internal static string UnexpectedEnding {
             get {
@@ -133,7 +133,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Програма реалізує аналіз арифметичних виразів, та, в разі їх коректності, повертає результат розрахунку. Розрахунки проводяться в цілих числах, присутня підтримка дужок в виразі..
+        ///   Looks up a localized string similar to The program implements the analysis of a arithmetic expressions, and, if it is correct, returns the result of the calculation. There is support for brackets in the expression, unary minus, calculations of  decimal expressions..
         /// </summary>
         internal static string Welcome {
             get {

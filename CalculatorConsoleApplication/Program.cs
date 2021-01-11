@@ -13,7 +13,7 @@ namespace CalculatorConsoleApplication
             Console.InputEncoding = Encoding.Unicode;
 
             if (args.Length > 0)
-                WorkWithFile(args[0]);
+                WorkWithFile(args);
             else
                 WorkWithConsole();
         }
@@ -22,29 +22,28 @@ namespace CalculatorConsoleApplication
         {
             InputOutputHandler handler = new InputOutputHandler(new ConsoleAplication());
             Console.WriteLine(Properties.Localization.Welcome);
-            Console.WriteLine(Properties.Localization.InputYoutExpression);
+            Console.WriteLine(Properties.Localization.InputYourExpression);
             while (true)
             {
                 handler.HandleInput(Console.ReadLine());
             }
         }
 
-        static void WorkWithFile(string path)
+        static void WorkWithFile(string[] paths)
         {
-            if (File.Exists(path))
+            foreach(string path in paths)
             {
-                FileManager manager = new FileManager(path);
-                InputOutputHandler handler = new InputOutputHandler(manager);
-                string[] inputFile = manager.ReadFile();
-                foreach (string expression in inputFile)
+                if (File.Exists(path))
                 {
-                    handler.HandleInput(expression);
+                    FileManager manager = new FileManager(path);
+                    InputOutputHandler handler = new InputOutputHandler(manager);
+                    handler.HandleFile(path);
+                    manager.WriteInFile();
                 }
-                manager.WriteInFile();
-            }
-            else
-            {
-                Console.WriteLine(Properties.Localization.FileNotExist);
+                else
+                {
+                    Console.WriteLine(Properties.Localization.FileNotExist);
+                }
             }
         }
     }

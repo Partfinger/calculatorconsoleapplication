@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DivideByZero" xml:space="preserve">
-    <value>The expression contains division by zero.</value>
+    <value>Не можна ділити на нуль!</value>
   </data>
   <data name="EmptyString" xml:space="preserve">
-    <value>Empty string can not be interpreted as arithmetic expression.</value>
+    <value>Пусту строку не можливо інтерпретувати як арифметичний вираз.</value>
   </data>
   <data name="FileNotExist" xml:space="preserve">
-    <value>The file does not exist with this path.</value>
+    <value>Заданий файл з виразами не вдалося знайти.</value>
   </data>
   <data name="IncorrectBackets" xml:space="preserve">
-    <value>The brackets in the expression are set incorrectly.</value>
+    <value>Некоректно задані дужки в виразі.</value>
   </data>
   <data name="IncorrectNotation" xml:space="preserve">
-    <value>Incorrect arithmetic notation.</value>
+    <value>В виразі має місце бути некоректний запис арифметичних операцій.</value>
   </data>
   <data name="InputYourExpression" xml:space="preserve">
-    <value>Enter the expression:</value>
+    <value>Введіть вирази для розрахунку:</value>
   </data>
   <data name="UnexpectedCharacter" xml:space="preserve">
-    <value>Unexpected character in expression.</value>
+    <value>Некоректний символ в виразі.</value>
   </data>
   <data name="UnexpectedEnding" xml:space="preserve">
-    <value>Unexpected ending of expression.</value>
+    <value>Не всі дужки в виразі є закритими.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>The program implements the analysis of a arithmetic expressions, and, if it is correct, returns the result of the calculation. There is support for brackets in the expression, unary minus, calculations of  decimal expressions.</value>
+    <value>Програма реалізує аналіз арифметичних виразів і, якщо це правильно, повертає результат обчислення. Існує підтримка дужок у виразі, одинарний мінус, обчислення дробних виразів.</value>
   </data>
 </root>

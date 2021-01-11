@@ -2,6 +2,7 @@
 using Calculator.Exceptios;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace CalculatorConsoleApplication
@@ -11,6 +12,15 @@ namespace CalculatorConsoleApplication
 
         ArithmeticParser parser = new ArithmeticParser();
         IOutput output;
+        Dictionary<Type, string> exceptionOutputs = new Dictionary<Type, string>()
+        {
+            { typeof( IncorrectArithmeticNotation), Properties.Localization.IncorrectNotation},
+            { typeof( UnexpectedCharacterException), Properties.Localization.UnexpectedCharacter},
+            { typeof( UnexpectedEndingException), Properties.Localization.UnexpectedEnding},
+            { typeof( IncorrectBacketsException), Properties.Localization.IncorrectBackets},
+            { typeof( ArgumentNullException), Properties.Localization.EmptyString},
+            { typeof( DivideByZeroException), Properties.Localization.DivideByZero}
+        };
 
         public InputOutputHandler(IOutput output)
         {
@@ -19,40 +29,26 @@ namespace CalculatorConsoleApplication
 
         public void HandleInput(string input)
         {
-            int result;
+            double result;
             try
             {
                 output.Write($"{input} = ");
-                if (input.Length > 0)
-                    result = parser.Parse(input);
-                else
-                    throw new ArgumentNullException();
+                result = parser.Parse(input);
 
                 output.WriteLine(result.ToString());
             }
-            catch (IncorrectArithmeticNotation)
+            catch (Exception exception)
             {
-                output.WriteLine(Properties.Localization.IncorrectNotation);
+                output.WriteLine(exceptionOutputs[exception.GetType()]);
             }
-            catch (UnexpectedCharacterException)
+        }
+
+        public void HandleFile(string path)
+        {
+            string[] lines = File.ReadAllLines(path);
+            foreach (string expression in lines)
             {
-                output.WriteLine(Properties.Localization.UnexpectedCharacter);
-            }
-            catch (UnexpectedEndingException)
-            {
-                output.WriteLine(Properties.Localization.UnexpectedEnding);
-            }
-            catch (IncorrectBacketsException)
-            {
-                output.WriteLine(Properties.Localization.IncorrectBackets);
-            }
-            catch (ArgumentNullException)
-            {
-                output.WriteLine(Properties.Localization.EmptyString);
-            }
-            catch (DivideByZeroException)
-            {
-                output.WriteLine(Properties.Localization.DivideByZero);
+                HandleInput(expression);
             }
         }
     }

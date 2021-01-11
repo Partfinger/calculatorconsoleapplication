@@ -5,16 +5,17 @@ using System.Text;
 
 namespace CalculatorTests.Stubs
 {
-    class OutputStub : IOutput
+    public class OutputStub : IOutput
     {
-        public void Write(string output)
+        public string output = "";
+        public void Write(string text)
         {
-
+            output += text;
         }
 
-        public void WriteLine(string output)
+        public void WriteLine(string text)
         {
-
+            output += $"{text}\n";
         }
     }
 }

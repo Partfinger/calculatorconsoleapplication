@@ -12,10 +12,10 @@ namespace CalculatorTests
         public void OrderOfOperationTest()
         {
             string expression = "2 + 2 * 2";
-            int expected = 6;
+            double expected = 6;
             ArithmeticParser parser = new ArithmeticParser();
 
-            int actual = parser.Parse(expression);
+            double actual = parser.Parse(expression);
 
             Assert.AreEqual(expected, actual);
         }
@@ -23,11 +23,11 @@ namespace CalculatorTests
         [TestMethod]
         public void BacketsTest()
         {
-            string expression = "714 + 22 - 14((24 - 1)5 + 22 * 16(3(12(13 - 17)(5 + 12))))12";
-            int expected = 144746344;
+            string expression = "(2 + 2) * 2";
+            double expected = 8;
             ArithmeticParser parser = new ArithmeticParser();
 
-            int actual = parser.Parse(expression);
+            double actual = parser.Parse(expression);
 
             Assert.AreEqual(expected, actual);
         }
@@ -37,10 +37,19 @@ namespace CalculatorTests
         public void DivideByZeroTest()
         {
             string expression = " 4 / (25 - 35 + 10)";
-            int expected = 1;
             ArithmeticParser parser = new ArithmeticParser();
 
-            int actual = parser.Parse(expression);
+            double actual = parser.Parse(expression);
+        }
+
+        [TestMethod]
+        public void DecimalDigitsTest()
+        {
+            string expression = " 4 / (.03 + .07)";
+            double expected = 40;
+            ArithmeticParser parser = new ArithmeticParser();
+
+            double actual = parser.Parse(expression);
 
             Assert.AreEqual(expected, actual);
         }
@@ -52,7 +61,17 @@ namespace CalculatorTests
             string expression = " 4 / (25 - 35 + 10";
             ArithmeticParser parser = new ArithmeticParser();
 
-            int actual = parser.Parse(expression);
+            double actual = parser.Parse(expression);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedCharacterException))]
+        public void UnexpectedCharacterTest()
+        {
+            string expression = " 4 * x + 2";
+            ArithmeticParser parser = new ArithmeticParser();
+
+            double actual = parser.Parse(expression);
         }
 
         [TestMethod]
@@ -62,7 +81,7 @@ namespace CalculatorTests
             string expression = "           ";
             ArithmeticParser parser = new ArithmeticParser();
 
-            int actual = parser.Parse(expression);
+            double actual = parser.Parse(expression);
         }
     }
 }
