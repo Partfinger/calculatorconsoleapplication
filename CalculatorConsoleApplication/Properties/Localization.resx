@@ -121,19 +121,19 @@
     <value>The expression contains division by zero.</value>
   </data>
   <data name="EmptyString" xml:space="preserve">
-    <value>Empty string can not be interpreted as arithmetic expression.</value>
+    <value>Empty string can not be interpreted as an arithmetic expression.</value>
   </data>
   <data name="FileNotExist" xml:space="preserve">
-    <value>The file does not exist with this path.</value>
+    <value>A file does not exist with this path.</value>
   </data>
   <data name="IncorrectBackets" xml:space="preserve">
-    <value>The brackets in the expression are set incorrectly.</value>
+    <value>Brackets in the expression are set incorrectly.</value>
   </data>
   <data name="IncorrectNotation" xml:space="preserve">
     <value>Incorrect arithmetic notation.</value>
   </data>
   <data name="InputYourExpression" xml:space="preserve">
-    <value>Enter the expression:</value>
+    <value>Enter your expressions:</value>
   </data>
   <data name="UnexpectedCharacter" xml:space="preserve">
     <value>Unexpected character in expression.</value>
@@ -142,6 +142,6 @@
     <value>Unexpected ending of expression.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>The program implements the analysis of a arithmetic expressions, and, if it is correct, returns the result of the calculation. There is support for brackets in the expression, unary minus, calculations of  decimal expressions.</value>
+    <value>This program implements parsing of arithmetic expressions, and returns a result of calculation. There is support for parentheses, unary minus, digits with floating point in a expression.</value>
   </data>
 </root>

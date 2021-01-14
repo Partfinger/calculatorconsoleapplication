@@ -70,7 +70,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Empty string can not be interpreted as arithmetic expression..
+        ///   Looks up a localized string similar to Empty string can not be interpreted as an arithmetic expression..
         /// </summary>
         internal static string EmptyString {
             get {
@@ -79,7 +79,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file does not exist with this path..
+        ///   Looks up a localized string similar to A file does not exist with this path..
         /// </summary>
         internal static string FileNotExist {
             get {
@@ -88,7 +88,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The brackets in the expression are set incorrectly..
+        ///   Looks up a localized string similar to Brackets in the expression are set incorrectly..
         /// </summary>
         internal static string IncorrectBackets {
             get {
@@ -106,7 +106,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the expression:.
+        ///   Looks up a localized string similar to Enter your expressions:.
         /// </summary>
         internal static string InputYourExpression {
             get {
@@ -133,7 +133,7 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The program implements the analysis of a arithmetic expressions, and, if it is correct, returns the result of the calculation. There is support for brackets in the expression, unary minus, calculations of  decimal expressions..
+        ///   Looks up a localized string similar to This program implements parsing of arithmetic expressions, and returns a result of calculation. There is support for parentheses, unary minus, digits with floating point in a expression..
         /// </summary>
         internal static string Welcome {
             get {

@@ -4,42 +4,37 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Calculator
 {
     public class ArithmeticParser
     {
-        /// <summary>
-        /// Шукає невалідні символи
-        /// </summary>
-        const string validCharacters = @"[^\d\+\-\*\/\(\)\.,]";
-        /// <summary>
-        /// Дублікати, два знаки підряд, знаки в кінці виразу
-        /// </summary>
-        const string dublicaserOrExcess = @"[\+\*\/]{2,}|\-{3,}|[\+\-\*\/]$|^[\+\*\/]|^\-{2,}";
-        //[\+\-\*\/]{2,}|[\+\-\*\/]$|^[\+\-\*\/]
-        const string splitCharacters = @"([\+\-\*\/\(\)])";
-        const string splitCharactersReplacement = @" $1 ";
+        const string DublicaserOrExcess = @"[\+\*\/]{2,}|\-{3,}|[\+\-\*\/]$|^[\+\*\/]|^\-{2,}";
+        const string defaultValidCharacters = @"\d\+\-\*\/\(\)\";
 
-        //const string bracketExpression = @"\(([\#\d\+\-\*\/]*)\)";
-        const string invalidDotSeparatorPattern = @"[\D]\.[\D]|[\d]\.[\D]|[\S]\.$";
-        const string neglectedMultiOperationPattern = @"([\d]|\))(\()|([\)])([\d])";
-        const string neglectedZeroInDecimalPattern = @"([\D])(\.[\d])";
-        const string anyWhiteSpacesPattern = @"\s+";
-        const string neglectedMultiReplacement = @"$1$3*$2$4";
-        const string neglectedZeroInDecimalReplacement = @"$1 0$2";
+        const string SplitCharacters = @"([\+\-\*\/\(\)])";
+        const string SplitCharactersReplacement = @" $1 ";
+
+        const string InvalidDecimalSeparatorPattern = @"[\D]\.[\D]|[\d]\.[\D]|[\S]\.$";
+        const string AnyWhiteSpacesPattern = @"\s+";
+        const string NeglectedMultiOperationPattern = @"([\d]|\))(\()|([\)])([\d])";
+        const string NeglectedMultiReplacement = @"$1$3*$2$4";
+
+        readonly string OnlyValidCharacters;
 
         string[] lexemes;
         int position;
 
         public ArithmeticParser()
         {
+            OnlyValidCharacters = $"[^{defaultValidCharacters}{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]";
         }
 
         public double Parse(string input)
         {
-            Regex regex = new Regex(anyWhiteSpacesPattern);
-            input = regex.Replace(input, "").Replace(',', '.');
+            Regex regex = new Regex(AnyWhiteSpacesPattern);
+            input = regex.Replace(input, "");
 
             if (input.Length == 0)
             {
@@ -117,7 +112,7 @@ namespace Calculator
         {
             string next = lexemes[position];
             double result;
-            if (!double.TryParse(next, NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            if (!double.TryParse(next, out result))
             {
                 if (next == "(")
                 {
@@ -151,26 +146,26 @@ namespace Calculator
 
         string[] SplitToLexemes(string input)
         {
-            Regex regex = new Regex(splitCharacters);
-            input = regex.Replace(input, splitCharactersReplacement);
+            Regex regex = new Regex(SplitCharacters);
+            input = regex.Replace(input, SplitCharactersReplacement);
             return input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         }
 
         void Validate(string input)
         {
-            Regex regex = new Regex(validCharacters);
+            Regex regex = new Regex(OnlyValidCharacters);
             if (regex.IsMatch(input))
             {
                 throw new UnexpectedCharacterException();
             }    
 
-            regex = new Regex(dublicaserOrExcess);
+            regex = new Regex(DublicaserOrExcess);
             if (regex.IsMatch(input))
             {
                 throw new IncorrectArithmeticNotation();
             }
 
-            regex = new Regex(invalidDotSeparatorPattern);
+            regex = new Regex(InvalidDecimalSeparatorPattern);
             if (regex.IsMatch(input))
             {
                 throw new Exception();
@@ -181,11 +176,8 @@ namespace Calculator
 
         string DecodeNeglectedOperations(string input)
         {
-            Regex regex = new Regex(neglectedMultiOperationPattern);
-            input = regex.Replace(input, neglectedMultiReplacement);
-
-            regex = new Regex(neglectedZeroInDecimalPattern);
-            input = regex.Replace(input, neglectedZeroInDecimalReplacement);
+            Regex regex = new Regex(NeglectedMultiOperationPattern);
+            input = regex.Replace(input, NeglectedMultiReplacement);
 
             return input;
         }

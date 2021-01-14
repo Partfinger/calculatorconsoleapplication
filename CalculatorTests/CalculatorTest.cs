@@ -1,6 +1,7 @@
 using Calculator;
 using Calculator.Exceptios;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Globalization;
 using System;
 
 namespace CalculatorTests
@@ -45,7 +46,8 @@ namespace CalculatorTests
         [TestMethod]
         public void DecimalDigitsTest()
         {
-            string expression = " 4 / (.03 + .07)";
+            string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string expression = $" 4 / ({separator}03 + {separator}07)";
             double expected = 40;
             ArithmeticParser parser = new ArithmeticParser();
 
