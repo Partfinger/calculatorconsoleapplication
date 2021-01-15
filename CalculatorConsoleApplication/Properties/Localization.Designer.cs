@@ -70,6 +70,15 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file is empty. Path: {0}..
+        /// </summary>
+        internal static string EmptyFile {
+            get {
+                return ResourceManager.GetString("EmptyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empty string can not be interpreted as an arithmetic expression..
         /// </summary>
         internal static string EmptyString {
@@ -79,11 +88,20 @@ namespace CalculatorConsoleApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A file does not exist with this path..
+        ///   Looks up a localized string similar to A file does not exist with this path: {0}..
         /// </summary>
         internal static string FileNotExist {
             get {
                 return ResourceManager.GetString("FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown error occurred while handling the file. Path: {0}..
+        /// </summary>
+        internal static string FileUnknownException {
+            get {
+                return ResourceManager.GetString("FileUnknownException", resourceCulture);
             }
         }
         
@@ -111,6 +129,15 @@ namespace CalculatorConsoleApplication.Properties {
         internal static string InputYourExpression {
             get {
                 return ResourceManager.GetString("InputYourExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program does not have the permissions required to read file with path: {0}..
+        /// </summary>
+        internal static string SecurityException {
+            get {
+                return ResourceManager.GetString("SecurityException", resourceCulture);
             }
         }
         

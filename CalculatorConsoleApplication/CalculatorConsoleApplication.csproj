@@ -25,7 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="justFile">
+    <None Update="Examples\justFile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\someExpression.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="someExpression.txt">

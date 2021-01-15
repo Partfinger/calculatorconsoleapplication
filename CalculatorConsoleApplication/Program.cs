@@ -1,4 +1,5 @@
 ﻿using Calculator;
+using CalculatorConsoleApplication.Output;
 using System;
 using System.IO;
 using System.Text;
@@ -25,7 +26,11 @@ namespace CalculatorConsoleApplication
             Console.WriteLine(Properties.Localization.InputYourExpression);
             while (true)
             {
-                handler.HandleInput(Console.ReadLine());
+                string newLine = Console.ReadLine();
+                if (newLine.Length != 0)
+                    handler.HandleInput(newLine);
+                else
+                    break;
             }
         }
 
@@ -37,12 +42,15 @@ namespace CalculatorConsoleApplication
                 {
                     FileManager manager = new FileManager(path);
                     InputOutputHandler handler = new InputOutputHandler(manager);
-                    handler.HandleFile(path);
-                    manager.WriteInFile();
+                    if (handler.HandleFile(path))
+                    {
+                        manager.WriteInFile();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(Properties.Localization.FileNotExist);
+                    Console.WriteLine(
+                        string.Format(Properties.Localization.FileNotExist, path));
                 }
             }
         }

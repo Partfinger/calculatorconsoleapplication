@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace CalculatorConsoleApplication
+namespace CalculatorConsoleApplication.Output
 {
     public class FileManager : IOutput
     {

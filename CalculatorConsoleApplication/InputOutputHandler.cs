@@ -1,8 +1,10 @@
 ﻿using Calculator;
 using Calculator.Exceptios;
+using CalculatorConsoleApplication.Output;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security;
 using System.Text;
 
 namespace CalculatorConsoleApplication
@@ -19,7 +21,7 @@ namespace CalculatorConsoleApplication
             { typeof( UnexpectedEndingException), Properties.Localization.UnexpectedEnding},
             { typeof( IncorrectBacketsException), Properties.Localization.IncorrectBackets},
             { typeof( ArgumentNullException), Properties.Localization.EmptyString},
-            { typeof( DivideByZeroException), Properties.Localization.DivideByZero}
+            { typeof( DivideByZeroException), Properties.Localization.DivideByZero},
         };
 
         public InputOutputHandler(IOutput output)
@@ -43,13 +45,33 @@ namespace CalculatorConsoleApplication
             }
         }
 
-        public void HandleFile(string path)
+        public bool HandleFile(string path)
         {
-            string[] lines = File.ReadAllLines(path);
-            foreach (string expression in lines)
+            string[] lines = null;
+            try
             {
-                HandleInput(expression);
+                lines = File.ReadAllLines(path);
+                if (lines.Length == 0)
+                {
+                    Console.WriteLine(string.Format(Properties.Localization.EmptyFile, path));
+                    return false;
+                }
+
+                foreach (string expression in lines)
+                {
+                    HandleInput(expression);
+                }
+                return true;
             }
+            catch (SecurityException)
+            {
+                Console.WriteLine(string.Format(Properties.Localization.SecurityException, path));
+            }
+            catch(Exception)
+            {
+                Console.WriteLine(string.Format(Properties.Localization.FileUnknownException, path));
+            }
+            return false;
         }
     }
 }

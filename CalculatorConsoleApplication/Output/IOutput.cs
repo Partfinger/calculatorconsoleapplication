@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CalculatorConsoleApplication
+namespace CalculatorConsoleApplication.Output
 {
     public interface IOutput
     {
